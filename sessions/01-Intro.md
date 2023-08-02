@@ -1,3 +1,5 @@
+Session 1: Introduction to Hybrid SQL Server Environments.
+
 - Slide1 - Introduction
 
   Brief introduction of the session and its objective.
