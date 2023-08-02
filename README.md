@@ -1,6 +1,6 @@
 # OsloTrainingDay
 
-"Mastering the Hybrid SQL Server Environment: A Comprehensive Training Day"
+"The DBA in a hybrid environment"
 
 Location: Microsoft Norway, 71 Dronning Eufemias gate 0194 Gamle Oslo Norway
 
