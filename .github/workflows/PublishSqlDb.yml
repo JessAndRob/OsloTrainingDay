@@ -1,0 +1,23 @@
+# .github/workflows/sql-deploy.yml
+on: 
+
+  push:
+    paths:
+        - '.demos/DatabaseCICD/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    working-directory: '.demos\DatabaseCICD'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/sql-action@v2.2
+      with:        
+        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        path: './Database.sqlproj'
+        action: 'publish'
+        build-arguments: '-c Release'                 # Optional build options passed to dotnet build
+        arguments: '/p:DropObjectsNotInSource=true'   # Optional properties and parameters for SqlPackage Publish

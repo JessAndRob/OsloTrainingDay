@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\DatabaseProjectAdventureWorksLT.sqlproj": {}
+  },
+  "projects": {
+    "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\DatabaseProjectAdventureWorksLT.sqlproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\DatabaseProjectAdventureWorksLT.sqlproj",
+        "projectName": "DatabaseProjectAdventureWorksLT",
+        "projectPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\DatabaseProjectAdventureWorksLT.sqlproj",
+        "packagesPath": "C:\\Users\\JessPomfret\\.nuget\\packages\\",
+        "outputPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\JessPomfret\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "http://nuget.datamasterminds.io/nuget/DMMGallery/": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.datamasterminds.io/nuget/DMMRgTools": {}
+        },
+        "frameworks": {
+          "net46": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU5128"
+          ]
+        }
+      },
+      "frameworks": {
+        "net46": {
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          }
+        }
+      }
+    }
+  }
+}

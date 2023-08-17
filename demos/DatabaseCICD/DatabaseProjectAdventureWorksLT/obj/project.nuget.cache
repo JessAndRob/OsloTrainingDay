@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "vuldwXbNwNYlNSGOZM7tXvWihFF+0C+6KCLNdtrXvxow3OIFeoJa0R7PqBZYKFmfCS9Zk/kn8U8D57iNVW4XMQ==",
+  "success": true,
+  "projectFilePath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\DatabaseProjectAdventureWorksLT\\DatabaseProjectAdventureWorksLT.sqlproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\JessPomfret\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\JessPomfret\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net46\\1.0.0\\microsoft.netframework.referenceassemblies.net46.1.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nuget.datamasterminds.io/nuget/DMMGallery/'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}

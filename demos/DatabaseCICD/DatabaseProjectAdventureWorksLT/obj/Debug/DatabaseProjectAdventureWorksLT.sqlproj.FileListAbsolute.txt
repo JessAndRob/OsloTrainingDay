@@ -1,0 +1,10 @@
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\bin\Debug\DatabaseProjectAdventureWorksLT.dacpac
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\bin\Debug\DatabaseProjectAdventureWorksLT.dll
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\bin\Debug\DatabaseProjectAdventureWorksLT.pdb
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\DatabaseProjectAdventureWorksLT.sqlproj.AssemblyReference.cache
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\Model.xml
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\refactor.xml
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\postdeploy.sql
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\predeploy.sql
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\DatabaseProjectAdventureWorksLT.dll
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\DatabaseProjectAdventureWorksLT\obj\Debug\DatabaseProjectAdventureWorksLT.pdb
