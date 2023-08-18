@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-    working-directory: '.demos\DatabaseCICD'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -20,4 +19,5 @@ jobs:
         path: './Database.sqlproj'
         action: 'publish'
         build-arguments: '-c Release'                 # Optional build options passed to dotnet build
-        arguments: '/p:DropObjectsNotInSource=true'   # Optional properties and parameters for SqlPackage Publish
+        arguments: '/p:DropObjectsNotInSource=true' # Optional properties and parameters for SqlPackage Publish
+      working-directory: 'demos/DatabaseCICD'
