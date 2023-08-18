@@ -8,6 +8,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: demos/DatabaseCICD/
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,8 +20,7 @@ jobs:
     - uses: azure/sql-action@v2.2
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        path: './Database.sqlproj'
+        path: './DatabaseProjectAdventureWorksLT/DatabaseProjectAdventureWorksLT.sqlproj'
         action: 'publish'
         build-arguments: '-c Release'                 # Optional build options passed to dotnet build
         arguments: '/p:DropObjectsNotInSource=true' # Optional properties and parameters for SqlPackage Publish
-        working-directory: 'demos/DatabaseCICD'
