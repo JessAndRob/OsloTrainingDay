@@ -14,7 +14,7 @@ try {
 
     $splatStorage = @{
         Name              = $name
-        ResourceGroupName = 'psconfeu-rg'
+        ResourceGroupName = 'dbatools-lab-azure'
         Location          = $location
         SkuName           = $sku
         Tag               = @{ 'CreatedBy' = 'AzFunc' }
