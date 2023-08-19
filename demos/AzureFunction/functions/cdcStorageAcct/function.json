@@ -1,0 +1,23 @@
+{
+  "bindings": [
+    {
+      "name": "stgAcctChanges",
+      "type": "sqlTrigger",
+      "direction": "in",
+      "tableName": "dbo.storageAcct",
+      "connectionStringSetting": "SqlConnectionString"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "Response"
+    },
+    {
+        "name": "log",
+        "type": "sql",
+        "direction": "out",
+        "commandText": "dbo.log",
+        "connectionStringSetting": "SqlConnectionString"
+    }
+  ]
+}

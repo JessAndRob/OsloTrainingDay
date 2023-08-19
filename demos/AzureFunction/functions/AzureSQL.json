@@ -1,0 +1,74 @@
+{
+    "metadata": {
+        "kernelspec": {
+            "name": "SQL",
+            "display_name": "SQL",
+            "language": "sql"
+        },
+        "language_info": {
+            "name": "sql",
+            "version": ""
+        }
+    },
+    "nbformat_minor": 2,
+    "nbformat": 4,
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "source": [
+                "# PSConfEU 2023"
+            ],
+            "metadata": {
+                "azdata_cell_guid": "2dab2903-08ba-44f6-9db3-d010bc69dcec"
+            },
+            "attachments": {}
+        },
+        {
+            "cell_type": "code",
+            "source": [
+                "declare @ret as int, @response as nvarchar(max);\r\n",
+                "\r\n",
+                "exec @ret = sp_invoke_external_rest_endpoint \r\n",
+                "\t@method = 'GET',\r\n",
+                "\t@url = 'https://my-function.azurewebsites.net/api/say?message=hello world',\r\n",
+                "\t@response = @response output;\r\n",
+                "\t\r\n",
+                "select @ret as ReturnCode, @response as Response;"
+            ],
+            "metadata": {
+                "azdata_cell_guid": "fb48d7a7-776c-4219-93a8-a3b8e9da505b",
+                "language": "sql"
+            },
+            "outputs": [],
+            "execution_count": null
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "Only calls to endpoints in the following services are allowed:\n",
+                "\n",
+                "[sp\\_invoke\\_external\\_rest\\_endpoint (Transact-SQL) - SQL Server | Microsoft Learn](https://learn.microsoft.com/en-gb/sql/relational-databases/system-stored-procedures/sp-invoke-external-rest-endpoint-transact-sql?view=azuresqldb-current&tabs=request-headers#allowed-endpoints)  \n",
+                "\n",
+                "  \n",
+                "\n",
+                "If you want to invoke a REST service that is not within the allowed list, you can use API Management to securely expose the desired service and make it available to sp\\_invoke\\_external\\_rest\\_endpoint."
+            ],
+            "metadata": {
+                "azdata_cell_guid": "a20a1f94-4716-48b6-bc4c-1cf190ab1406"
+            },
+            "attachments": {}
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## Whole load of samples here:\n",
+                "\n",
+                "https://github.com/Azure-Samples/azure-sql-db-invoke-external-rest-endpoints"
+            ],
+            "metadata": {
+                "azdata_cell_guid": "1613036a-25a4-4904-9d5d-c7a0798671b7"
+            },
+            "attachments": {}
+        }
+    ]
+}
