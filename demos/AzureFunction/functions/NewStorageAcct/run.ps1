@@ -14,7 +14,7 @@ try {
 
     $splatStorage = @{
         Name              = $name
-        ResourceGroupName = 'dbatools-lab-azure'
+        ResourceGroupName = 'dbatools-azure-lab'
         Location          = $location
         SkuName           = $sku
         Tag               = @{ 'CreatedBy' = 'AzFunc' }
