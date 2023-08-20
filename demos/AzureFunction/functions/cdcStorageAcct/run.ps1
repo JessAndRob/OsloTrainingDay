@@ -17,7 +17,7 @@ try {
 
         $splatStorage = @{
             Name              = $change.Item.storageAcctName
-            ResourceGroupName = 'dbatools-lab-azure'
+            ResourceGroupName = 'dbatools-azure-lab'
             Location          = $location
             SkuName           = $sku
             Tag               = @{ 'CreatedBy' = 'AzFuncV2' }
