@@ -56,7 +56,9 @@ and also hybrid dbatools scripts examples
 
 - ### 13:00-14:15 - Session 3: Leveraging Infrastructure as Code for Your Hybrid SQL Server Estate - Rob
  - Understand the basics of Infrastructure as Code and its application in managing SQL Server databases.
- - demo create, update - destroy from CLI then talk about CI/CD - Rob 
+ - demo create, update - destroy from CLI then talk about CI/CD - Rob
+ - Taryns Azure AG code
+ - Iac for SQLServer and PaaS
 
 - ### 14:15-15:30 - Session 4: Harnessing GitHub Actions and Azure Functions to Automate Workflows - Jess
     - Explore how to use GitHub Actions and Azure Functions for automated and integrated workflows.
