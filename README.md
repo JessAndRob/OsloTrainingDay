@@ -47,7 +47,9 @@ Iac
         - Failed jobs   
         - Ask the audience what task they can do in SSMS that we should replicate with PowerShell  
     (Also use this to demo workflow of get-command/find-dbacommand and then work through the task)  
-        - Next steps – combining same results for multiple databases/servers/environments.. why you’d do it in PowerShell. 
+        - Next steps – combining same results for multiple databases/servers/environments.. why you’d do it in PowerShell.
+    >  Invoke-DbaAzSQLTips against our Azure SQL
+and also hybrid dbatools scripts examples
 
 
 - ### 12:00-13:00 - Lunch
