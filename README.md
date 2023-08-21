@@ -47,14 +47,18 @@ Iac
         - Failed jobs   
         - Ask the audience what task they can do in SSMS that we should replicate with PowerShell  
     (Also use this to demo workflow of get-command/find-dbacommand and then work through the task)  
-        - Next steps – combining same results for multiple databases/servers/environments.. why you’d do it in PowerShell. 
+        - Next steps – combining same results for multiple databases/servers/environments.. why you’d do it in PowerShell.
+    >  Invoke-DbaAzSQLTips against our Azure SQL
+and also hybrid dbatools scripts examples
 
 
 - ### 12:00-13:00 - Lunch
 
 - ### 13:00-14:15 - Session 3: Leveraging Infrastructure as Code for Your Hybrid SQL Server Estate - Rob
  - Understand the basics of Infrastructure as Code and its application in managing SQL Server databases.
- - demo create, update - destroy from CLI then talk about CI/CD - Rob 
+ - demo create, update - destroy from CLI then talk about CI/CD - Rob
+ - Taryns Azure AG code
+ - Iac for SQLServer and PaaS
 
 - ### 14:15-15:30 - Session 4: Harnessing GitHub Actions and Azure Functions to Automate Workflows - Jess
     - Explore how to use GitHub Actions and Azure Functions for automated and integrated workflows.
