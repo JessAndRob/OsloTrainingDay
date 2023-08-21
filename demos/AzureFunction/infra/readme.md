@@ -2,7 +2,7 @@
 
 Did the following manually and need to add this to IaC
 
-## Configure Managed Identity ofr for the function app to connect to the SQL Database
+## Configure Managed Identity for for the function app to connect to the SQL Database
 
 -- 1. Enable Azure AD authentication to the SQL database
     -- assign an Azure AD user as the AD admin of the server
@@ -23,7 +23,8 @@ Did the following manually and need to add this to IaC
     -- user managed identity
         -- Server=demo.database.windows.net; Authentication=Active Directory Managed Identity; User Id=ClientIdOfManagedIdentity; Database=testdb
 
-
+## Cdc
+Also need to 'Allow Azure Services and resources to access this server' checkbox for the dsoslo-server
 ## NewStorageAcct - managed identity permissions
     -- using managed identity to create storage accounts
     -- managed identity needs

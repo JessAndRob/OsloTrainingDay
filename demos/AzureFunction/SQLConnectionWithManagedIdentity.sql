@@ -17,3 +17,9 @@
     -- user managed identity
         -- Server=demo.database.windows.net; Authentication=Active Directory Managed Identity; User Id=ClientIdOfManagedIdentity; Database=testdb
 
+
+-- NewStorageAcct
+    -- using managed identity to create storage accounts
+    -- managed identity needs
+        -- permissions to create storage accounts in the resource group
+        -- reader permissions to the subscription 

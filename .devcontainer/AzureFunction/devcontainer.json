@@ -22,7 +22,8 @@
 				"streetsidesoftware.code-spell-checker",
 				"yzhang.markdown-all-in-one",
 				"DavidAnson.vscode-markdownlint",
-				"Gruntfuggly.todo-tree"
+				"Gruntfuggly.todo-tree",
+				"rangav.vscode-thunder-client"
 			]
 		}
 	},
