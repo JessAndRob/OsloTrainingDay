@@ -1,0 +1,39 @@
+name: New Storage Account
+description: Create a new storage account in Azure
+title: "[Stg]: "
+labels: ["stg", "azure"]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Lets create a new storage account in Azure.
+  - type: input
+    id: stg_name
+    attributes:
+      label: Storage Account Name
+      description: The name of the storage account to create (lowercase letters and numbers only - max 24 characters)
+      placeholder: ex. nicestorage7894
+    validations:
+      required: true
+  - type: dropdown
+    id: tag
+    attributes:
+      label: Tag
+      description: Pick a tag for the storage account
+      options:
+        - Development
+        - Test
+        - Production
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: I know what I'm doing
+      description: By submitting this form, you agree that you know what you're doing
+      options:
+        - label: Trust me...
+          required: true
