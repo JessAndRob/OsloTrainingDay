@@ -1,18 +1,48 @@
+# Lets have a look at some bicep and terraform for our SQL Servers and Databases
+
+#region bicep
+
+#region first some set up
+# We need to connect to Azure and set the subscription
 Connect-AzAccount -UseDeviceAuthentication
 
 Set-AzContext -Subscription bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461
 
+# we'll set some variables for the resource group and location as well
 $resourceGroupName = "dbatools-azure-lab"
 $location = "westeurope"
-
-Get-AzResource -ResourceGroupName $resourceGroupName
 
 # secure string for password
 $securePassword = ConvertTo-SecureString -String 'dbatools.IO1' -AsPlainText -Force
 
-# deploy bicep template
-$deploymentName = "oslo-IAC-deployment"
+# deploy bicep template name
 
+$deploymentName = "oslo-IAC-{0}" -f (Get-Date -Format 'yyMMddhhmmss')
+#endregion first some set up
+
+#region existing resources
+# what do we have ?
+
+Start-Process  https://portal.azure.com/#@jpomfret7gmail.onmicrosoft.com/resource/subscriptions/bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461/resourceGroups/dbatools-azure-lab/overview
+
+Get-AzResource -ResourceGroupName $resourceGroupName
+
+# thats not so useful
+
+Get-AzResource -ResourceGroupName $resourceGroupName | Select Name, ResourceType
+
+# lets just concentrate on the oslo SQL resources
+Get-AzResource -ResourceGroupName $resourceGroupName| Where Name -like '*oslo*' | Select Name, ResourceType
+
+#endregion existing resources
+
+#region deploy bicep
+
+# lets take a look at the bicep template
+
+code .\demos\IaC\bicep\Data\SqlInstance.bicep
+
+# lets deploy it with a WhatIf
 $splat = @{
     Name                               = $deploymentName
     ResourceGroupName                  = $resourceGroupName
@@ -35,32 +65,74 @@ $splat = @{
 
 }
 $deployment = New-AzResourceGroupDeployment @splat -WhatIf
+#endregion deploy bicep
+#endregion bicep
 
+#region terraform
+
+#region first some set up
+# we need to login with the az cli
 az login
-
+# set the subscription
 az account set --subscription 'bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461'
 
+# this time we need to set the admin password as an environment variable
 $ENV:TF_VAR_administrator_login_password="dbatools.IO1"
+
+# its easier to set the directory to the terraform directory
 cd demos\IaC\terraform
+
+# I am going to use a local state file so I am removing any existing ones so you can see what is happening
 
 Remove-Item localterraform.tfstate -ErrorAction SilentlyContinue -Force
 Remove-Item localterraform.tfstate.backup -ErrorAction SilentlyContinue -Force
+Remove-Item .terraform.lock.hcl -ErrorAction SilentlyContinue -Force
+
+#endregion first some set up
+
+#region terraform
+# lets take a look at the terraform template
+
+code main.tf
+
+# looks pretty much like the bicep template
+
+# lets take a look at the variables
+
+code variables.tf
+
+# thats the definition of the variables that we will use
+# here are the values we will use
+
+code deploydev.tfvars
+
+# first we need to initialise terraform
 
 terraform init
 
+# now we can plan This is like a whatif except we can create a plan file that we can use to apply the changes later (CI/CD)
+
 terraform plan -out tfplan -var-file="deploydev.tfvars"
+
 
 # WAIT - WHAT? YOU ARE GOING TO CREATE
 
 # pokker
 
+
+
+
+
 # Thats not what I want
 
-# lets loo9k at the current state
+# lets look at the current state
 
-terraform state show -state="localterraform.tfstate"
+# This is different from bicep. Bicep looks at the resources in the resource group and compares them to the template. Terraform looks at the state file and compares it to the template.
 
-# so we have to jump through hoops to import the resources - we have ot escape with a ` we have to provide the var  file BEFORE the resource name.
+terraform state list
+
+#So we need to import the resources into the state file.
+# so we have to jump through hoops to import the resources - we have ot escape with a ` we have to provide the var  file BEFORE the resource name. We have to give the full resource id for each one.
 
 terraform import -var-file="deploydev.tfvars"  azurerm_resource_group.rg /subscriptions/bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461/resourceGroups/dbatools-azure-lab
 
@@ -70,23 +142,14 @@ terraform import -var-file="deploydev.tfvars" azurerm_mssql_database.databases[0
 
 terraform import -var-file="deploydev.tfvars" azurerm_mssql_database.databases[1] /subscriptions/bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461/resourceGroups/dbatools-azure-lab/providers/Microsoft.Sql/servers/dsoslo-server/databases/dsoslo-db-cdc-dev
 
-# Now we can plan wiht the resources
 
-terraform plan -out tfplan -var-file="deploydev.tfvars"
-
-# Grrrrr
-terraform state list
-terraform state show -state="localterraform.tfstate" azurerm_mssql_server.sql
-terraform state show -state="localterraform.tfstate" azurerm_mssql_database.databases[`"dsoslo-db-cdc-dev`"]
-
-terraform import -var-file="deploydev.tfvars" azurerm_mssql_database.databases[0] /subscriptions/bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461/resourceGroups/dbatools-azure-lab/providers/Microsoft.Sql/servers/dsoslo-server/databases/dsoslo-db-dev
-
-terraform import -var-file="deploydev.tfvars" azurerm_mssql_database.databases[1] /subscriptions/bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461/resourceGroups/dbatools-azure-lab/providers/Microsoft.Sql/servers/dsoslo-server/databases/dsoslo-db-cdc-dev
 
 terraform state list
 terraform state show -state="localterraform.tfstate" azurerm_mssql_server.sql
-terraform state show -state="localterraform.tfstate" azurerm_mssql_database.databases[`"dsoslo-db-cdc-dev`"]
+terraform state show -state="localterraform.tfstate" azurerm_mssql_database.databases[0]
 
-# Now we can plan wiht the resources
+# Now we can plan with the resources
 
 terraform plan -out tfplan -var-file="deploydev.tfvars"
+
+#endregion terraform
