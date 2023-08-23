@@ -1,0 +1,7 @@
+demos/IaC/terraform/backend_override.tf
+demos/IaC/terraform/.terraform.lock.hcl
+demos/IaC/terraform/localterraform.tfstate
+demos/IaC/terraform/localterraform.tfstate.backup
+**tfplan**
+demos/IaC/terraform/.terraform/terraform.tfstate
+demos/IaC/terraform/.terraform/**
