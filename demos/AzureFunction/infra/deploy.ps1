@@ -26,5 +26,7 @@ $splat = @{
     administratorLoginPassword = $securePassword
     appName                    = 'dsoslo2023'
     tags                       = @{'for'='dsoslo2023'}
+    cosmosDbName               = 'dsoslo-cosmos'
+    containerName              = 'dsoslo-container'
 }
-$deployment = New-AzResourceGroupDeployment @splat
+$deployment = New-AzResourceGroupDeployment @splat #-whatif
