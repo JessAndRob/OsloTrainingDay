@@ -24,6 +24,13 @@ jobs:
       with: 
        clean: true
        fetch-depth: 0
+
+    - name: Create temp folder
+      run: |
+        if ( -not (Test-Path ./temp)) {
+          Write-Host "temp folder does not exist"
+          New-Item -ItemType Directory -Path ./temp
+        }
     
     - name: Get Information to file
       run: |
