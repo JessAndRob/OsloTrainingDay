@@ -1,3 +1,5 @@
+# Going to add a comment so that we know what this file is for
+# This file is for the variables for the terraform
 resource_group_name = "dbatools-azure-lab"
 
 sql_instance_name="dsoslo-server"
