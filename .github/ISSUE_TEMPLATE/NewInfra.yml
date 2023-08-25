@@ -11,7 +11,7 @@ body:
   - type: input
     id: resource_group_name
     attributes:
-      label: Resource Group Name
+      label: resource_group_name
       description: The name of the resource group to create.
     validations:
       required: true
@@ -19,7 +19,7 @@ body:
   - type: input
     id: sql_instance_name
     attributes:
-      label: SQL Instance Name
+      label: sql_instance_name
       description: The name of the SQL instance.
     validations:
       required: true
@@ -27,7 +27,7 @@ body:
   - type: input
     id: location
     attributes:
-      label: Location
+      label: location
       description: The location for the resources.
     validations:
       required: true
@@ -35,7 +35,7 @@ body:
   - type: input
     id: tags
     attributes:
-      label: Tags
+      label: tags
       description: The tags to apply to the resources.
       placeholder: '{"for" : "dsoslo2023"}'
     validations:
@@ -44,7 +44,7 @@ body:
   - type: input
     id: administrator_login
     attributes:
-      label: Admin Login
+      label: administrator_login
       description: The admin login for the SQL instance.
       placeholder: 'sqladmin'
     validations:
@@ -53,7 +53,7 @@ body:
   - type: dropdown
     id: environment
     attributes:
-      label: Environment
+      label: environment
       description: Pick the environment
       options:
         - dev
@@ -66,7 +66,7 @@ body:
   - type: dropdown
     id: minimum_tls_version
     attributes:
-      label: Minimum TLS Version
+      label: minimum_tls_version
       description: Enable or disable minimum_tls_version
       options:
         - Disabled
@@ -78,7 +78,7 @@ body:
   - type: dropdown
     id: public_network_access
     attributes:
-      label: Public Network Access
+      label: public_network_access
       description: Enable or disable public_network_access
       options:
         - Disabled
@@ -90,7 +90,7 @@ body:
   - type: input
     id: active_directory_admin_user
     attributes:
-      label: AD Admin User
+      label: active_directory_admin_user
       description: The AD admin user for the SQL instance.
     validations:
       required: true      
@@ -98,7 +98,7 @@ body:
   - type: input
     id: active_directory_admin_sid
     attributes:
-      label: AD Admin SID
+      label: active_directory_admin_sid
       description: The AD admin SID for the SQL instance.
     validations:
       required: true      
@@ -106,7 +106,7 @@ body:
   - type: input
     id: tenantid
     attributes:
-      label: Tenant ID
+      label: tenantid
       description: The tenant ID for the SQL instance.
     validations:
       required: true      
@@ -114,7 +114,7 @@ body:
   - type: input
     id: sql_database_names
     attributes:
-      label: SQL Database Names
+      label: sql_database_names
       description: The SQL database names to create on the SQL instance.
       placeholder: '["db1", "db2"]'
     validations:
