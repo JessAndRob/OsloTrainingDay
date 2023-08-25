@@ -15,7 +15,7 @@ defaults:
     working-directory: demos/DatabaseCICD/
 
 jobs:
-  build:
+  build-adventureworks:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -23,6 +23,18 @@ jobs:
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         path: 'demos/DatabaseCICD/DatabaseProjectAdventureWorksLT/DatabaseProjectAdventureWorksLT.sqlproj'
+        action: 'publish'
+        build-arguments: '-c Release'                 # Optional build options passed to dotnet build
+        arguments: '/p:DropObjectsNotInSource=true' # Optional properties and parameters for SqlPackage Publish
+
+  build-dsoslo:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: azure/sql-action@v2.2
+      with:        
+        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        path: 'demos/DatabaseCICD/dsoslo-db-dve/dsoslo-db-dve.sqlproj'
         action: 'publish'
         build-arguments: '-c Release'                 # Optional build options passed to dotnet build
         arguments: '/p:DropObjectsNotInSource=true' # Optional properties and parameters for SqlPackage Publish
