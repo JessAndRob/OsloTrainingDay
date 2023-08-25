@@ -15,7 +15,7 @@ defaults:
 jobs:
   insert:
   # only run if issue is created by jess
-    if: contains(github.event.issue.labels.*.name, 'infra')
+    #if: contains(github.event.issue.labels.*.name, 'infra')   # labels aren't getting applied properly from the issue_template for tfvars
     runs-on: ubuntu-latest
 
     steps:
