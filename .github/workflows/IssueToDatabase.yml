@@ -17,28 +17,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
     
-    - name: Get Issue Title
-      id: get_issue_title
-      run: echo "::set-output name=title::$(jq --raw-output .issue.title $GITHUB_EVENT_PATH)"
-
-    - name: Get Issue Number
-      id: get_issue_number
-      run: echo "::set-output name=number::$(jq --raw-output .issue.number $GITHUB_EVENT_PATH)"
-
-    - name: Get Issue Link
-      id: get_issue_link
-      run: echo "::set-output name=link::$(jq --raw-output .issue.html_url $GITHUB_EVENT_PATH)"
-
     # call api to insert data
     - name: Insert Issue Data
       id: insert_issue_data
       run: |
         $body = @{
-          IssueTitle = '${{ steps.get_issue_title.outputs.title }}'
-          IssueNumber = '${{ steps.get_issue_number.outputs.number }}'
-          IssueLink = '${{ steps.get_issue_link.outputs.link }}'
+          IssueTitle = '${{ github.event.issue.title }}'
+          IssueNumber = '${{ github.event.issue.number }}'
+          IssueLink = '${{ github.event.issue.html_url }}'
         }
         $bodyJson = $body | ConvertTo-Json
         $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlData' -Method Post -Body $bodyJson -ContentType 'application/json'
