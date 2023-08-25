@@ -1,0 +1,61 @@
+# when an issue is opened add the title and link to sql database
+
+name: Issue creation to create Infra
+
+on:
+  issues:
+    types: 
+      - opened
+
+# default to pwsh
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  insert:
+  # only run if issue is created by jess
+    if: contains(github.event.issue.labels.*.name, 'infra')
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    # call api to insert data
+    - name: Insert tf vars
+      id: insert_tf_vars
+      run: |
+        echo ${{ github.event.issue}} 
+
+        $body = @{
+          resource_group_name         =   '${{ github.event.issue.resource_group_name}}'
+          sql_instance_name           =     '${{ github.event.issue.sql_instance_name}}'
+          location                    =  '${{ github.event.issue.location}}'
+          tags                        =  '${{ github.event.issue.tags}}'
+          administrator_login         =   '${{ github.event.issue.administrator_login}}'
+          environment                 =   '${{ github.event.issue.environment}}'
+          minimum_tls_version         =   '${{ github.event.issue.minimum_tls_version}}'
+          public_network_access       =     '${{ github.event.issue.public_network_access}}'
+          active_directory_admin_user =   '${{ github.event.issue.active_directory_admin_user}}'
+          active_directory_admin_sid  =    '${{ github.event.issue.active_directory_admin_sid}}'
+          tenantid                    =  '${{ github.event.issue.tenantid}}'
+          sql_database_names          =    '${{ github.event.issue.sql_database_names}}'
+        }
+        $bodyJson = $body | ConvertTo-Json
+        $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
+        echo $response
+
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "main"
+        pr_title: "We got some infra to create for issue number #${{ github.event.issue.number }}"
+        pr_body: ":crown: *An automated PR*
+
+        For issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}
+        
+        "              # Full markdown support, requires pr_title to be set
+        pr_reviewer: "SQLDBAWithABeard,jpomfret"                         # Comma-separated list (no spaces)
+        pr_assignee: "SQLDBAWithABeard,jpomfret"                         # Comma-separated list (no spaces)
+        pr_label: "create-infra"                               # Comma-separated list (no spaces)                    # Milestone name
+
+        github_token: ${{ secrets.GITHUB_TOKEN }}
