@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - uses: actions/checkout@v2
+      with: 
+       clean: true
+       fetch-depth: 0
     
     - name: Get Information to file
       run: |
