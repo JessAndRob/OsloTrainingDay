@@ -20,17 +20,30 @@ jobs:
 
     steps:
     
+    - name: Get Information to file
+      run: |
+        Write-Host "What do we have?"
+        $Event = @"
+        ${{ toJson(github.event) }}
+        "@
+        Write-Host $Event
+        $IssueBody =  @"
+        ${{ github.event.issue.body }}
+        "@
+        # Write-Host $IssueBody 
+        $IssueBody | Out-File ./temp/temp.txt
+      shell: pwsh
+      continue-on-error: true   
+
     # call api to insert data
-    - name: Insert tf vars
+    - name: Insert tf vars from temp file
       id: insert_tf_vars
       run: |
-        echo '${{ github.event.issue.body }}'
-
-        $issueBody = '${{ github.event.issue.body }}'
-
+        # get the temp file contents - I do this so I don't lose anything
+        $file = Get-Content ./temp/temp.txt -Raw
         # parse the issue
-        $regexResult = [regex]::Matches($issueBody, '(?ms)resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n')
-
+        $regexResult = [regex]::Matches($file, '(?ms)resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n')
+  
         # create the json
         $body = @{
           resource_group_name         =  $regexResult[0].Groups['resource_group_name'].Value
