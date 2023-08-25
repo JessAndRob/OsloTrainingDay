@@ -11,7 +11,7 @@ write-host $req_body.tostring()
 
 # Assign the value we want to pass to the SQL Output binding. 
 # The -Name value corresponds to the name property in the function.json for the binding
-Push-OutputBinding -Name todoItems -Value $req_body
+Push-OutputBinding -Name issuesItems -Value $req_body
 
 Push-OutputBinding -Name res -Value ([HttpResponseContext]@{
     StatusCode = [HttpStatusCode]::OK

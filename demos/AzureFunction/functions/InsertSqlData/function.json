@@ -15,10 +15,10 @@
         "name": "res"
     },
     {
-        "name": "todoItems",
+        "name": "issuesItems",
         "type": "sql",
         "direction": "out",
-        "commandText": "dbo.ToDo",
+        "commandText": "dbo.Issues",
         "connectionStringSetting": "SqlConnectionString"
     }
   ]
