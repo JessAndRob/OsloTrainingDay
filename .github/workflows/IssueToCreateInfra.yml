@@ -55,7 +55,7 @@ jobs:
         $file = Get-Content ./temp/temp.txt -Raw
         # parse the issue
         $regexResult = [regex]::Matches($file, '(?ms)resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n')
-  
+    
         # create the json
         $body = @{
           resource_group_name         =  $regexResult[0].Groups['resource_group_name'].Value
@@ -65,13 +65,15 @@ jobs:
           administrator_login         =  $regexResult[0].Groups['administrator_login'].Value
           environment                 =  $regexResult[0].Groups['environment'].Value
           minimum_tls_version         =  $regexResult[0].Groups['minimum_tls_version'].Value
-          public_network_access       =  $regexResult[0].Groups['public_network_access'].Value
+          public_network_access       =  if($regexResult[0].Groups['public_network_access'].Value -eq "Enabled") { 1 } else { 0 }
           active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].Value
           active_directory_admin_sid  =  $regexResult[0].Groups['active_directory_admin_sid'].Value
           tenantid                    =  $regexResult[0].Groups['tenantid'].Value
           sql_database_names          =  $regexResult[0].Groups['sql_database_names'].Value
         }
+
         $bodyJson = $body | ConvertTo-Json
+        Write-Host $bodyJson 
         $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
         echo $response
 
