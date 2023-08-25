@@ -24,21 +24,27 @@ jobs:
     - name: Insert tf vars
       id: insert_tf_vars
       run: |
-        echo ${{ github.event.issue}} 
+        echo ${{ github.event.body}} 
 
+        $issueBody = ${{ github.event.body}} 
+
+        # parse the issue
+        $regexResult = '(?ms)resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n')
+
+        # create the json
         $body = @{
-          resource_group_name         =   '${{ github.event.issue.resource_group_name}}'
-          sql_instance_name           =     '${{ github.event.issue.sql_instance_name}}'
-          location                    =  '${{ github.event.issue.location}}'
-          tags                        =  '${{ github.event.issue.tags}}'
-          administrator_login         =   '${{ github.event.issue.administrator_login}}'
-          environment                 =   '${{ github.event.issue.environment}}'
-          minimum_tls_version         =   '${{ github.event.issue.minimum_tls_version}}'
-          public_network_access       =     '${{ github.event.issue.public_network_access}}'
-          active_directory_admin_user =   '${{ github.event.issue.active_directory_admin_user}}'
-          active_directory_admin_sid  =    '${{ github.event.issue.active_directory_admin_sid}}'
-          tenantid                    =  '${{ github.event.issue.tenantid}}'
-          sql_database_names          =    '${{ github.event.issue.sql_database_names}}'
+          resource_group_name         =  $regexResult[0].Groups['resource_group_name'].Value
+          sql_instance_name           =  $regexResult[0].Groups['sql_instance_name'].Value
+          location                    =  $regexResult[0].Groups['location'].Value
+          tags                        =  $regexResult[0].Groups['tags'].Value
+          administrator_login         =  $regexResult[0].Groups['administrator_login'].Value
+          environment                 =  $regexResult[0].Groups['environment'].Value
+          minimum_tls_version         =  $regexResult[0].Groups['minimum_tls_version'].Value
+          public_network_access       =  $regexResult[0].Groups['public_network_access'].Value
+          active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].Value
+          active_directory_admin_sid  =  $regexResult[0].Groups['active_directory_admin_sid'].Value
+          tenantid                    =  $regexResult[0].Groups['tenantid'].Value
+          sql_database_names          =  $regexResult[0].Groups['sql_database_names'].Value
         }
         $bodyJson = $body | ConvertTo-Json
         $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
