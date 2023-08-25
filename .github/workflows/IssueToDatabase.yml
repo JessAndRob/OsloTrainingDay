@@ -1,5 +1,7 @@
 # when an issue is opened add the title and link to sql database
 
+name: Insert Issue into into SQL Database
+
 on:
   issues:
     types: 

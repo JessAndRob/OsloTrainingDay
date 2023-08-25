@@ -1,4 +1,6 @@
 # .github/workflows/sql-deploy.yml
+name: Deploy Database Project to Azure SQL
+
 on: 
 
   push:
