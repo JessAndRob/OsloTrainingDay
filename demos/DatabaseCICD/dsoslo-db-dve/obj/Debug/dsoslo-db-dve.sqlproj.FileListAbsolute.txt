@@ -1,0 +1,10 @@
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\bin\Debug\dsoslo-db-dve.dacpac
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\bin\Debug\dsoslo-db-dve.dll
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\bin\Debug\dsoslo-db-dve.pdb
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\dsoslo-db-dve.sqlproj.AssemblyReference.cache
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\Model.xml
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\refactor.xml
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\postdeploy.sql
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\predeploy.sql
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\dsoslo-db-dve.dll
+c:\GitHub\OsloTrainingDay\demos\DatabaseCICD\dsoslo-db-dve\obj\Debug\dsoslo-db-dve.pdb
