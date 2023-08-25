@@ -1,0 +1,26 @@
+{
+"bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "Request",
+      "methods": [
+          "post"
+      ]
+    },
+    {
+        "type": "http",
+        "direction": "out",
+        "name": "res"
+    },
+    {
+        "name": "tfvars",
+        "type": "sql",
+        "direction": "out",
+        "commandText": "dbo.tfvars",
+        "connectionStringSetting": "SqlConnectionString"
+    }
+  ]
+}
+
