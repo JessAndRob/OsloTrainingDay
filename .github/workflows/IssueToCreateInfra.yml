@@ -93,7 +93,7 @@ jobs:
         # Iterate through the hashtable and replace placeholders
         $body.GetEnumerator() | ForEach-Object {
             $placeholder = "__" + $_.Key + "__"
-            $content = $content -replace [regex]::Escape($placeholder), $_.Value
+            $content = $content -replace [regex]::Escape        ($placeholder), $_.Value
         }
 
         $newfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
@@ -106,7 +106,7 @@ jobs:
         author_email: mrrobsewell@outlook.com
         message: 'Added the newvars file to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
         new_branch:  'new-infra-issue-${{ github.event.issue.number }}'
-        push: origin new-infra-issue-${{ github.event.issue.number }} --set-upstream--force
+        push: origin new-infra-issue-${{ github.event.issue.number }} --set-upstream --force
       continue-on-error: true
 
     - name: pull-request
