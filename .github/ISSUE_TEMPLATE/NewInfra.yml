@@ -54,8 +54,8 @@ body:
     attributes:
       label: tags
       description: The tags to apply to the resources.
-      placeholder: '{"for" : "dsoslo2023"}'
-      value: '{"for" : "dsoslo2023"}'
+      placeholder: '"for" = "dsoslo2023"'
+      value: '"for" = "dsoslo2023"'
     validations:
       required: false
 
