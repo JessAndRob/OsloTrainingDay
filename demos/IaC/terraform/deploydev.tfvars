@@ -22,5 +22,5 @@ tenantid="f98042ad-9bbc-499d-adb4-17193696b9a3"
 
 # external_administrator_principal_type="User"
 
-sql_database_names= ["dsoslo-db", "dsoslo-db-cdc"]
+sql_database_names= [["dsoslo-db", "dsoslo-db-cdc","new-db-please"]] # "database1", "database2"
 
