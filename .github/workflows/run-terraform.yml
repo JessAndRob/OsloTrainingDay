@@ -3,14 +3,14 @@
 name: Deploy Infrastructure
 
 on:
-  push:
-    paths:
-      - 'demos/IaC/terraform/**'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy:
-    # only run if issue is created by jess
-    if: github.actor == 'nobody'
+    # only run if PR has the label 'create-infra'
+    if: contains(github.event.pull_request.labels.*.name, 'create-infra')
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,8 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-      run: terraform init demos/IaC/terraform
+      run: terraform init
+      working-directory: demos/IaC/terraform
 
     - name: Create Terraform Plan Artifact
       id: plan
@@ -40,13 +41,15 @@ jobs:
         plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
 
         terraform plan -out="$plan_file_name" -var-file="most_recent_var_file"  demos/IaC/terraform
+        terraform plan -out="./demos/IaC/terraform/plans/latest/$most_recent_var_filename_without_extension.plan" -var-file="most_recent_var_file"  demos/IaC/terraform
       continue-on-error: true
+      working-directory: demos/IaC/terraform
 
     - name: Upload Plan Artifact
       uses: actions/upload-artifact@v2
       with:
         name: terraform-plan
-        path: plan/terraform.plan
+        path: ./demos/IaC/terraform/plans/latest
 
     - name: Generate Infracost Report
       run: |
