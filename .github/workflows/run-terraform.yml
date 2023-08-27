@@ -41,7 +41,7 @@ jobs:
     - name: Create Terraform Plan Artifact
       id: plan
       run: |
-        plans_path="./demos/IaC/terraform/plans"
+        plans_path="plans"
 
         # Get the most recent file using find and printf
         most_recent_var_file=$(find "$plans_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
@@ -52,8 +52,8 @@ jobs:
 
         plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
 
-        terraform plan -out="$plan_file_name" -var-file="most_recent_var_file"  demos/IaC/terraform
-        terraform plan -out="./demos/IaC/terraform/plans/latest/$most_recent_var_filename_without_extension.plan" -var-file="most_recent_var_file"  demos/IaC/terraform
+        terraform plan -out="$plan_file_name" -var-file="most_recent_var_file"
+        terraform plan -out="latest/$most_recent_var_filename_without_extension.plan" -var-file="most_recent_var_file"
       continue-on-error: true
       working-directory: demos/IaC/terraform
 
