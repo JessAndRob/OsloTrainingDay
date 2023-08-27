@@ -24,6 +24,7 @@ body:
     attributes:
       label: resource_group_name
       description: The name of the resource group to create.
+      placeholder: 'dbatools-azure-lab'
     validations:
       required: true
 
@@ -32,6 +33,7 @@ body:
     attributes:
       label: sql_instance_name
       description: The name of the SQL instance.
+      placeholder: 'dsoslo-server'
     validations:
       required: true
 
@@ -40,6 +42,7 @@ body:
     attributes:
       label: location
       description: The location for the resources.
+      placeholder: 'westeurope'
     validations:
       required: true
 
@@ -103,6 +106,7 @@ body:
     attributes:
       label: active_directory_admin_user
       description: The AD admin user for the SQL instance.
+      placeholder: 'jess@jpomfret7gmail.onmicrosoft.com'
     validations:
       required: true
 
@@ -111,6 +115,7 @@ body:
     attributes:
       label: active_directory_admin_sid
       description: The AD admin SID for the SQL instance.
+      placeholder: '0c97d81f-a7c6-40d4-9077-ade0dfbfe968'
     validations:
       required: true
 
@@ -119,6 +124,7 @@ body:
     attributes:
       label: tenantid
       description: The tenant ID for the SQL instance.
+      placeholder: 'f98042ad-9bbc-499d-adb4-17193696b9a3'
     validations:
       required: true
 
@@ -127,7 +133,7 @@ body:
     attributes:
       label: sql_database_names
       description: The SQL database names to create on the SQL instance.
-      placeholder: '["db1", "db2"]'
+      placeholder: '["dsoslo-db", "dsoslo-db-cdc"]'
     validations:
       required: true
 
