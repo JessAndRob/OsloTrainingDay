@@ -4,12 +4,17 @@ name: Deploy Infrastructure
 
 on:
   pull_request:
-   # types: [labeled,  synchronize, opened, edited, reopened]
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - labeled
 
 jobs:
   deploy:
     # only run if PR has the label 'create-infra'
-    # if: contains(github.event.pull_request.labels.*.name, 'create-infra')
+    if: contains(github.event.pull_request.labels.*.name, 'create-infra')
     runs-on: ubuntu-latest
 
     steps:
