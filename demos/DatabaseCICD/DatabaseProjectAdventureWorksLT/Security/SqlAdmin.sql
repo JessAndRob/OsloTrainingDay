@@ -1,4 +1,4 @@
-CREATE USER [sqladmin] ;
+CREATE USER [sqladmin] FROM LOGIN [sqladmin];
 GO
 
 GRANT CONNECT TO [sqladmin];
