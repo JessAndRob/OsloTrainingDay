@@ -91,7 +91,7 @@ jobs:
         $requestor  =  $regexResult[0].Groups['requestor'].Value
         $Date = Get-Date -Format "yyyyMMddHHmmss"
 
-        $varfile = ".\demos\IaC\terraform\deploydev_template.tfvars"
+        $varfile = ".\demos\IaC\terraform\deploy_template.txt"
 
         $Content = Get-Content $varfile
 
@@ -101,15 +101,17 @@ jobs:
             $content = $content -replace [regex]::Escape($placeholder), $_.Value
         }
 
-        $newfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
-        Set-Content $newfile $content
+        $historicaldeployfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
+        $deployfile = "./demos/IaC/terraform/plans/deploy_dev.tfvars"
+        Set-Content $historicaldeployfile $content
+        Set-Content $deployfile $content
 
     - name: Add & Commit
       uses: EndBug/add-and-commit@v9
       with:
         author_name: DaBot
         author_email: mrrobsewell@outlook.com
-        message: 'Added the newvars file to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
+        message: 'Added the updated variables for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
         new_branch:  'new-infra-issue-${{ github.event.issue.number }}'
         push: origin new-infra-issue-${{ github.event.issue.number }} --set-upstream --force
       continue-on-error: true
