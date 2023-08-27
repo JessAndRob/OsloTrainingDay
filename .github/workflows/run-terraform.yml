@@ -23,6 +23,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ADMINISTRATOR_LOGIN_PASSWORD: ${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}
     steps:
     - uses: Azure/login@v1
       with:
@@ -52,9 +53,9 @@ jobs:
 
         plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
 
-        terraform plan -out="$plan_file_name" -var-file="$most_recent_var_file"
+        terraform plan -out="$plan_file_name" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
 
-        terraform plan -out="plans/latest/$most_recent_var_filename_without_extension.plan" -var-file="$most_recent_var_file"
+        terraform plan -out="plans/latest/$most_recent_var_filename_without_extension.plan" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
       continue-on-error: true
       working-directory: demos/IaC/terraform
 
