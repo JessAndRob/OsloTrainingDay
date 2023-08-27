@@ -9,6 +9,8 @@ on:
 
 jobs:
   deploy:
+    # only run if issue is created by jess
+    if: github.actor == 'nobody'
     runs-on: ubuntu-latest
 
     steps:
