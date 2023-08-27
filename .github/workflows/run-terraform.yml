@@ -1,0 +1,75 @@
+# github action to deploy the infrastructure for this training project from the demos\IaC\terraform directory with a manual approval step, a plan artiffact and a infracost report prior to the applu step
+
+name: Deploy Infrastructure
+
+on:
+  push:
+    paths:
+      - 'demos/IaC/terraform/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init demos/IaC/terraform
+
+    - name: Create Terraform Plan Artifact
+      id: plan
+      run: |
+        plans_path="./demos/IaC/terraform/plans"
+
+        # Directory path
+        plans_path="/mnt/c/temp/"
+        # Get the most recent file using find and printf
+        most_recent_var_file=$(find "$plans_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
+        # Extract the filename using basename
+        most_recent_var_filename=$(basename "$most_recent_var_file")
+        # Remove the file extension using parameter expansion
+        most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
+
+        plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
+
+        terraform plan -out="$plan_file_name" -var-file="most_recent_var_file"  demos/IaC/terraform
+      continue-on-error: true
+
+    - name: Upload Plan Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: terraform-plan
+        path: plan/terraform.plan
+
+    - name: Generate Infracost Report
+      run: |
+        # Yeah - I know I should pass them through as parameters but I'm lazy
+        plans_path="./demos/IaC/terraform/plans"
+
+        # Directory path
+        plans_path="/mnt/c/temp/"
+        # Get the most recent file using find and printf
+        most_recent_var_file=$(find "$plans_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
+        # Extract the filename using basename
+        most_recent_var_filename=$(basename "$most_recent_var_file")
+        # Remove the file extension using parameter expansion
+        most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
+
+        plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
+
+        curl -sL https://github.com/infracost/infracost/releases/latest/download/infracost-linux-amd64.tar.gz | tar xz -C /tmp
+        /tmp/infracost report --path="plan_file_name"
+      id: infracost
+
+    - name: Review and Approve
+      if: github.event_name == 'pull_request'
+      run: echo "Please review the Terraform plan and Infracost report in the PR and approve the deployment if everything looks good."
+
+    - name: Deploy Infrastructure
+      if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
+      run: terraform apply "plan/terraform.plan"

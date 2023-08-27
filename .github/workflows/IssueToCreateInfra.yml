@@ -27,9 +27,13 @@ jobs:
 
     - name: Create temp folder
       run: |
-        if ( -not (Test-Path ./temp)) {
+        if ( -not (Test-Path ./demos/IaC/terraform/temp)) {
           Write-Host "temp folder does not exist"
-          New-Item -ItemType Directory -Path ./temp
+          New-Item -ItemType Directory -Path ./demos/IaC/terraform/temp
+        }
+        if ( -not (Test-Path ./demos/IaC/terraform/plans)) {
+          Write-Host "temp folder does not exist"
+          New-Item -ItemType Directory -Path ./demos/IaC/terraform/plans
         }
 
     - name: Get Information to file
@@ -43,7 +47,7 @@ jobs:
         ${{ github.event.issue.body }}
         "@
         # Write-Host $IssueBody
-        $IssueBody | Out-File ./temp/temp.txt
+        $IssueBody | Out-File ./demos/IaC/terraform/temp/temp.txt
       shell: pwsh
       continue-on-error: true
 
@@ -52,9 +56,9 @@ jobs:
       id: insert_tf_vars
       run: |
         # get the temp file contents - I do this so I don't lose anything
-        $file = Get-Content ./temp/temp.txt -Raw
+        $file = Get-Content ./demos/IaC/terraform/temp/temp.txt -Raw
         # parse the issue
-        $regexResult = [regex]::Matches($file, '(?ms)resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n\n### ')
+        $regexResult = [regex]::Matches($file, '(?ms)requestor\n\n(?<requestor>.*)\n\n### resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n\n### ')
 
         # create the json
         $body = @{
@@ -77,6 +81,11 @@ jobs:
         $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
         echo $response
 
+        # Create the terraform vars file from the body
+
+        $requestor  =  $regexResult[0].Groups['requestor'].Value
+        $Date = Get-Date -Format "yyyyMMddHHmmss"
+
         $varfile = ".\demos\IaC\terraform\deploydev_template.tfvars"
 
         $Content = Get-Content $varfile
@@ -87,7 +96,7 @@ jobs:
             $content = $content -replace [regex]::Escape        ($placeholder), $_.Value
         }
 
-        $newfile = ".\demos\IaC\terraform\deploy_new_dev.tfvars"
+        $newfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
         Set-Content $newfile $content
 
     - name: Add & Commit
@@ -95,7 +104,7 @@ jobs:
       with:
         author_name: DaBot
         author_email: mrrobsewell@outlook.com
-        message: 'Added the dev file to the repo for issue number #${{ githubevent.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
+        message: 'Added the newvars file to the repo for issue number #${{ githubevent.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
         new_branch:  'new-infra-issue-${{ github.event.issue.number }}'
         push: origin new-infra-issue-${{ github.event.issue.number }} --set-upstream--force
       continue-on-error: true
