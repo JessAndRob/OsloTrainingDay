@@ -132,4 +132,4 @@ jobs:
         pr_assignee: "SQLDBAWithABeard,jpomfret"                         # Comma-separated list (no spaces)
         pr_label: "create-infra"                               # Comma-separated list (no spaces)                    # Milestone name
 
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.ROBS_PAT }}
