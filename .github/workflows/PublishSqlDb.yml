@@ -34,7 +34,7 @@ jobs:
     - uses: azure/sql-action@v2.2
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING_OSLO }}
-        path: 'demos/DatabaseCICD/dsoslo-db-dve/dsoslo-db-dev.sqlproj'
+        path: 'demos/DatabaseCICD/dsoslo-db-dev/dsoslo-db-dev.sqlproj'
         action: 'publish'
         build-arguments: '-c Release'                 # Optional build options passed to dotnet build
         arguments: '/p:DropObjectsNotInSource=true' # Optional properties and parameters for SqlPackage Publish
