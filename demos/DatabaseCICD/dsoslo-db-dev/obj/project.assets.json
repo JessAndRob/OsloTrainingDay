@@ -368,11 +368,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dve\\dsoslo-db-dve.sqlproj",
-      "projectName": "dsoslo-db-dve",
-      "projectPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dve\\dsoslo-db-dve.sqlproj",
+      "projectUniqueName": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dev\\dsoslo-db-dev.sqlproj",
+      "projectName": "dsoslo-db-dev",
+      "projectPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dev\\dsoslo-db-dev.sqlproj",
       "packagesPath": "C:\\Users\\JessPomfret\\.nuget\\packages\\",
-      "outputPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dve\\obj\\",
+      "outputPath": "c:\\GitHub\\OsloTrainingDay\\demos\\DatabaseCICD\\dsoslo-db-dev\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
