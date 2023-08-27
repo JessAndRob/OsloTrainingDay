@@ -1,6 +1,6 @@
 {
     "dataworkspace.excludedProjects": [
         "demos/DatabaseCICD/AdventureWorks/AdventureWorks.sqlproj",
-        "demos/DatabaseCICD/dsoslo-db-dev/dsoslo-db-dev.sqlproj"
+        "demos/DatabaseCICD/dsoslo-db-dve/dsoslo-db-dve.sqlproj"
     ]
 }

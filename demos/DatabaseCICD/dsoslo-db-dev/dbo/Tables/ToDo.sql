@@ -4,6 +4,7 @@ CREATE TABLE [dbo].[ToDo] (
     [title]     NVARCHAR (200) NOT NULL,
     [url]       NVARCHAR (200) NOT NULL,
     [completed] BIT            NOT NULL,
+    [ANewCol]   INT            NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

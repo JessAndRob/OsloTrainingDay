@@ -6,7 +6,7 @@
     <ProjectGuid>{B043B40B-A2B9-4836-B30A-94BA6A242001}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
-    <EnableChangeTracking>True</EnableChangeTracking>
+    <IsChangeTrackingOn>True</IsChangeTrackingOn>
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
