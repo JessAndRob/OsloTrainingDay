@@ -25,6 +25,7 @@ body:
       label: resource_group_name
       description: The name of the resource group to create.
       placeholder: 'dbatools-azure-lab'
+      value: 'dbatools-azure-lab'
     validations:
       required: true
 
