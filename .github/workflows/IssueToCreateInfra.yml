@@ -98,8 +98,18 @@ jobs:
 
         # Iterate through the hashtable and replace placeholders
         $body.GetEnumerator() | ForEach-Object {
-            $placeholder = "__" + $_.Key + "__"
-            $content = $content -replace [regex]::Escape($placeholder), $_.Value
+          $replace = $_.Value
+          switch ($_.Key) {
+              "public_network_access" {
+                  if($replace -eq 1) {
+                      $replace = "true"
+                  } else {
+                      $replace = "false"
+                  }
+              }
+          }
+           $placeholder = "__" + $_.Key + "__"
+           $content = $content -replace [regex]::Escape($placeholder), $replace
         }
 
         $historicaldeployfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date

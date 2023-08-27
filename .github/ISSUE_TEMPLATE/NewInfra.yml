@@ -141,8 +141,8 @@ body:
     attributes:
       label: sql_database_names
       description: The SQL database names to create on the SQL instance.
-      placeholder: '["dsoslo-db", "dsoslo-db-cdc"]'
-      value: '["dsoslo-db", "dsoslo-db-cdc"]'
+      placeholder: '"dsoslo-db", "dsoslo-db-cdc"'
+      value: '"dsoslo-db", "dsoslo-db-cdc"'
     validations:
       required: true
 
