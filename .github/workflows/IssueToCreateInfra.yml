@@ -102,7 +102,7 @@ jobs:
         }
 
         $historicaldeployfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
-        $deployfile = "./demos/IaC/terraform/deploy_dev.tfvars"
+        $deployfile = "./demos/IaC/terraform/deploydev.tfvars"
         Set-Content $historicaldeployfile $content
         Set-Content $deployfile $content
 
