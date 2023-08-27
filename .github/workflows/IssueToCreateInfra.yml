@@ -128,8 +128,8 @@ jobs:
         For issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}
 
         "              # Full markdown support, requires pr_title to be set
-        pr_reviewer: "SQLDBAWithABeard,jpomfret"                         # Comma-separated list (no spaces)
-        pr_assignee: "SQLDBAWithABeard,jpomfret"                         # Comma-separated list (no spaces)
+        pr_reviewer: "jpomfret"                         # Comma-separated list (no spaces)
+        pr_assignee: "jpomfret"                         # Comma-separated list (no spaces)
         pr_label: "create-infra"                               # Comma-separated list (no spaces)                    # Milestone name
 
         github_token: ${{ secrets.ROBS_PAT }}
