@@ -86,10 +86,12 @@ body:
     id: minimum_tls_version
     attributes:
       label: minimum_tls_version
-      description: Enable or disable minimum_tls_version
+      description: minimum_tls_version
       options:
-        - Disabled
-        - Enabled
+        - '1.0'
+        - '1.1'
+        - '1.2'
+        - 'None'
       default: 0
     validations:
       required: true
