@@ -12,6 +12,7 @@ defaults:
   run:
     shell: pwsh
 
+# https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs - even though it doesnt directly give the perms here :-()
 permissions:
   contents: write  # To push a branch
   pull-requests: write  # To create a PR from that branch
@@ -117,6 +118,7 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: "main"
+        source_branch: "new-infra-issue-${{ github.event.issue.number }}"
         pr_title: "We got some infra to create for issue number #${{ github.event.issue.number }}"
         pr_body: ":crown: *An automated PR*
 
