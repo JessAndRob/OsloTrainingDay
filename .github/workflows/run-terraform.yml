@@ -52,8 +52,9 @@ jobs:
 
         plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
 
-        terraform plan -out="$plan_file_name" -var-file="most_recent_var_file"
-        terraform plan -out="latest/$most_recent_var_filename_without_extension.plan" -var-file="most_recent_var_file"
+        terraform plan -out="$plan_file_name" -var-file="$most_recent_var_file"
+
+        terraform plan -out="plans/latest/$most_recent_var_filename_without_extension.plan" -var-file="$most_recent_var_file"
       continue-on-error: true
       working-directory: demos/IaC/terraform
 
