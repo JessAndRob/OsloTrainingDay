@@ -18,9 +18,10 @@ permissions:
   pull-requests: write  # To create a PR from that branch
 
 jobs:
-  insert:
-  # only run if issue is created by jess
-    if: contains(github.event.issue.labels.*.name, 'create-infra')   # labels aren't getting applied properly from the issue_template for tfvars
+  CreateInfraConfigCost:
+    name: Create Infra Config Cost
+  # only run if issue has the create-infra label
+    #if: contains(github.event.issue.labels.*.name, 'spending-your-money')
     runs-on: ubuntu-latest
 
     steps:

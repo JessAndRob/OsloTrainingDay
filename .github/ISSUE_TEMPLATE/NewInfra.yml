@@ -1,7 +1,7 @@
 name: I want to Spend More Money
 description: Create some new infrastructure
 title: "[tfvars]: "
-labels: ["create-infra"]
+labels: ["spending-your-money"]
 body:
   - type: markdown
     attributes:
