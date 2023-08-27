@@ -92,3 +92,13 @@ jobs:
     - name: Deploy Infrastructure
       if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
       run: terraform apply "plan/terraform.plan"
+
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: DaBot
+        author_email: mrrobsewell@outlook.com
+        message: 'Added the plan for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
+
+      continue-on-error: true
+

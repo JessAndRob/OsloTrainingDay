@@ -38,8 +38,12 @@ jobs:
           New-Item -ItemType Directory -Path ./demos/IaC/terraform/temp
         }
         if ( -not (Test-Path ./demos/IaC/terraform/plans)) {
-          Write-Host "temp folder does not exist"
+          Write-Host "plans folder does not exist"
           New-Item -ItemType Directory -Path ./demos/IaC/terraform/plans
+        }
+        if ( -not (Test-Path ./demos/IaC/terraform/plans/latest)) {
+          Write-Host "latest folder does not exist"
+          New-Item -ItemType Directory -Path ./demos/IaC/terraform/plans/latest
         }
 
     - name: Get Information to file
