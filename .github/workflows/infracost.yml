@@ -7,6 +7,7 @@ env:
   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 jobs:
   infracost:
+    if: github.event_name == 'Jeremy' # because I dont watn this running either
     name: Infracost
     runs-on: ubuntu-latest
     permissions:
