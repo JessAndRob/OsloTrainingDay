@@ -5,6 +5,8 @@ on:
     branches: ["main"]
     paths:
       - 'demos/IaC/terraform/plans/**' # Only trigger the workflow when new terraform plan is created
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
     SpendTheMoney:
@@ -45,8 +47,9 @@ jobs:
             most_recent_var_filename=$(basename "$most_recent_var_file")
             # Remove the file extension using parameter expansion
             most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
-            plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
+            plan_file_name="$most_recent_var_filename_without_extension.plan"
 
+            cd $plans_path
             terraform apply "$plan_file_name" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
 
           continue-on-error: true
