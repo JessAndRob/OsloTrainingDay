@@ -41,6 +41,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh pr checkout ${{ github.event.pull_request.number }}
 
+    - name: Create folders
+      run: |
+        $filepaths = @("./demos/IaC/terraform/temp", "./demos/IaC/terraform/plans", "./demos/IaC/terraform/vars", "./demos/IaC/terraform/plans/latest")
+
+        foreach ($filepath in $filepaths) {
+          if ( -not (Test-Path $filepath)) {
+            Write-Host "$filepath does not exist"
+            New-Item -ItemType Directory -Path $filepath
+          }
+        }
+      shell: pwsh
     - name: Get Information to file
       run: |
         Write-Host "What do we have?"
