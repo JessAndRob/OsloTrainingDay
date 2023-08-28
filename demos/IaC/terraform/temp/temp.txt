@@ -1,6 +1,6 @@
 ### requestor
 
-Jess
+Rob
 
 ### resource_group_name
 
@@ -48,7 +48,7 @@ f98042ad-9bbc-499d-adb4-17193696b9a3
 
 ### sql_database_names
 
-"dsoslo-db", "dsoslo-db-cdc","alright-me-babber-db"
+"dsoslo-db", "dsoslo-db-cdc", "fancy-dee-bee"
 
 ### I know what I'm doing
 
