@@ -2,6 +2,7 @@
 
 name: Check Infrastucture Plan and Cost
 
+
 on:
   pull_request:
     types:
@@ -34,10 +35,22 @@ jobs:
         creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
 
     - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.ROBS_PAT }}
+      uses: actions/checkout@v3
 
+    - name: Get Information to file
+      run: |
+        Write-Host "What do we have?"
+        $Event = @"
+        ${{ toJson(github.event) }}
+        "@
+        Write-Host $Event
+        $IssueBody =  @"
+        ${{ github.event.issue.body }}
+        "@
+        # Write-Host $IssueBody
+        $IssueBody | Out-File ./demos/IaC/terraform/temp/temp.txt
+      shell: pwsh
+      continue-on-error: true
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
@@ -100,7 +113,7 @@ jobs:
         author_name: DaBot
         author_email: mrrobsewell@outlook.com
         message: 'Added the plan for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
-        pull: true
+        push: origin new-event-issue-${{ github.event.issue.number }} --set-upstream --force
 
       continue-on-error: true
 
