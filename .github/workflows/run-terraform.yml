@@ -6,7 +6,6 @@ name: Check Infrastucture Plan and Cost
 on:
   pull_request:
     types:
-      - opened
       - edited
       - reopened
       - synchronize
