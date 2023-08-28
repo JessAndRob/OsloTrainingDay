@@ -1,0 +1,54 @@
+name: Deploy the Terraform and spend the money
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'demos/IaC/terraform/plans/**' # Only trigger the workflow when new terraform plan is created
+
+jobs:
+    SpendTheMoney:
+        name: Deploy the Terraform and spend the money
+        runs-on: ubuntu-latest
+
+        env:
+            ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+            ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+            ADMINISTRATOR_LOGIN_PASSWORD: ${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}
+
+        steps:
+        - name: Checkout the code
+          uses: actions/checkout@v2
+
+        - uses: Azure/login@v1
+          name: Login to Azure
+          with:
+            creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v1
+
+        - name: Terraform Init
+          run: terraform init
+          working-directory: demos/IaC/terraform
+
+        - name: Apply the latest terraform artifact
+          id: apply
+          run: |
+            plans_path="plans"
+
+            # Get the most recent file using find and printf
+            most_recent_var_file=$(find "$plans_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
+            # Extract the filename using basename
+            most_recent_var_filename=$(basename "$most_recent_var_file")
+            # Remove the file extension using parameter expansion
+            most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
+            plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
+
+            terraform apply "$plan_file_name" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
+
+          continue-on-error: true
+          working-directory: demos/IaC/terraform
+
