@@ -1,0 +1,42 @@
+──────────────────────────────────
+[1mProject:[0m SQLDBAWithABeard/OsloTrainingDay/demos/IaC/terraform
+
+[32m+[0m [1mazurerm_mssql_database.databases[2][0m
+  +$391[2m[0m
+
+    [32m+[0m Compute (provisioned, GP_Gen5_2)
+      +$244[2m[0m
+
+    [32m+[0m SQL license
+      +$146[2m[0m
+
+    [32m+[0m Storage
+      +$0.68[2m[0m
+
+    [32m+[0m Long-term retention (RA-GRS)
+      Monthly cost depends on usage
+        +$0.0595 per GB
+
+    [32m+[0m PITR backup storage (RA-GRS)
+      Monthly cost depends on usage
+        +$0.24 per GB
+
+[1mMonthly cost change for[0m [1mSQLDBAWithABeard/OsloTrainingDay/demos/IaC/terraform[0m
+Amount:  +$391 [2m($782 → $1,173)[0m
+Percent: +50%
+
+──────────────────────────────────
+Key: [33m~[0m changed, [32m+[0m added, [31m-[0m removed
+
+5 cloud resources were detected:
+∙ 3 were estimated, all of which include usage-based costs, see [4mhttps://infracost.io/usage-file[0m
+∙ 2 were free:
+  ∙ 1 x azurerm_mssql_server
+  ∙ 1 x azurerm_resource_group
+
+Infracost estimate: monthly cost will increase by $391 ↑
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃ Project                                              ┃ Cost change  ┃ New monthly cost ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━┫
+┃ SQLDBAWithABeard/OsloTrainingDay/demos/IaC/terraform ┃ +$391 (+50%) ┃ $1,173           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━┛
