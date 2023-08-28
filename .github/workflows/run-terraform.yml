@@ -93,7 +93,7 @@ jobs:
         author_name: DaBot
         author_email: mrrobsewell@outlook.com
         message: 'Added the plan for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
-
+        pull: true
 
       continue-on-error: true
 
