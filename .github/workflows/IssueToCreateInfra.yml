@@ -41,6 +41,10 @@ jobs:
           Write-Host "plans folder does not exist"
           New-Item -ItemType Directory -Path ./demos/IaC/terraform/plans
         }
+        if ( -not (Test-Path ./demos/IaC/terraform/vars)) {
+          Write-Host "vars folder does not exist"
+          New-Item -ItemType Directory -Path ./demos/IaC/terraform/vars
+        }
         if ( -not (Test-Path ./demos/IaC/terraform/plans/latest)) {
           Write-Host "latest folder does not exist"
           New-Item -ItemType Directory -Path ./demos/IaC/terraform/plans/latest
@@ -116,7 +120,7 @@ jobs:
            $content = $content -replace [regex]::Escape($placeholder), $replace
         }
 
-        $historicaldeployfile = "./demos/IaC/terraform/plans/deploy_{0}_{1}.tfvars" -f $requestor, $Date
+        $historicaldeployfile = "./demos/IaC/terraform/vars/deploy_{0}_{1}.tfvars" -f $requestor, $Date
         $deployfile = "./demos/IaC/terraform/deploydev.tfvars"
         Set-Content $historicaldeployfile $content
         Set-Content $deployfile $content
