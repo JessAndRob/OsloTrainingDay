@@ -80,15 +80,19 @@ jobs:
         vars_path="vars"
         plans_path="plans"
         rm latest.plan
+        ls - l $vars_path
         # Get the most recent file using find and printf
         most_recent_var_file=$(find "$vars_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
         # Extract the filename using basename
         most_recent_var_filename=$(basename "$most_recent_var_file")
+        echo "The most recent var file is $most_recent_var_filename"
         # Remove the file extension using parameter expansion
         most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
 
         plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
 
+        echo "The plan file name is $plan_file_name"
+        echo "we will run terraform plan -out=$plan_file_name -var-file=$most_recent_var_file -var="administrator_login_password="
         terraform plan -out="$plan_file_name" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
 
         terraform plan -out="latest.plan" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
