@@ -60,61 +60,89 @@ jobs:
     - name: Insert tf vars from temp file
       id: insert_tf_vars
       run: |
-        # get the temp file contents - I do this so I don't lose anything
-        $file = Get-Content ./demos/IaC/terraform/temp/temp.txt -Raw
-        # parse the issue
-        $regexResult = [regex]::Matches($file, '(?ms)requestor\n\n(?<requestor>.*)\n\n### resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?<sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)\n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?<environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n### public_network_access\n\n(?<public_network_access>.*)\n\n### active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n### active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?<tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n\n### ')
+          # Get the content of a temp file
+          $file = Get-Content ./demos/IaC/terraform/temp/temp.txt -Raw
 
-        # create the json
-        $body = @{
-          resource_group_name         =  $regexResult[0].Groups['resource_group_name'].Value
-          sql_instance_name           =  $regexResult[0].Groups['sql_instance_name'].Value
-          location                    =  $regexResult[0].Groups['location'].Value
-          tags                        =  $regexResult[0].Groups['tags'].Value
-          administrator_login         =  $regexResult[0].Groups['administrator_login'].Value
-          environment                 =  $regexResult[0].Groups['environment'].Value
-          minimum_tls_version         =  $regexResult[0].Groups['minimum_tls_version'].Value
-          public_network_access       =  if($regexResult[0].Groups['public_network_access'].Value -eq "Enabled") { 1 } else { 0 }
-          active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].Value
-          active_directory_admin_sid  =  $regexResult[0].Groups['active_directory_admin_sid'].Value
-          tenantid                    =  $regexResult[0].Groups['tenantid'].Value
-          sql_database_names          =  $regexResult[0].Groups['sql_database_names'].Value
-        }
+          # Parse the content using regular expressions
+          # Here's a breakdown of how the regular expression works:
 
-        $bodyJson = $body | ConvertTo-Json
-        Write-Host $bodyJson
-        $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
-        echo $response
+          #   (?ms): These are regex flags that enable the "multiline" (m) and "dot matches all" # (s) modes. The multiline mode allows ^ and $ to match the start and end of lines in # addition to the entire string. The dot matches all mode makes the dot (.) character # match newlines as well.
+          #
+          #   requestor\n\n: This part matches the string "requestor" followed by two newline # characters. It is used to locate the start of the desired information section.
+          #
+          #   (?<requestor>.*): This is a named capture group that captures any characters (.*) # until the next named pattern in the regex. The captured content is assigned to the # named capture group "requestor".
+          #
+          #   \n\n### resource_group_name\n\n: This part matches the string "### # resource_group_name" surrounded by two newline characters on each side. It is used # to locate the start of the next piece of information.
+          #
+          #   (?<resource_group_name>.*): This named capture group captures any characters (.*) # until the next named pattern in the regex. The captured content is assigned to the # named capture group "resource_group_name".
+          #
+          #   Similar sections exist for the other captured values like sql_instance_name, # location, tags, and so on. Each of these sections follows the same pattern: a named # capture group that captures any characters until the next named pattern.
+          #
+          #   The overall regex structure is designed to match specific sections of the text and # capture the content within those sections using named capture groups. This allows # you to extract structured data from a given text file.
+          #
+          $regexResult = [regex]::Matches($file, '(?ms)requestor\n\n(?<requestor>.*)\n\n###     resource_group_name\n\n(?<resource_group_name>.*)\n\n### sql_instance_name\n\n(?    <sql_instance_name>.*)\n\n### location\n\n(?<location>.*)\n\n### tags\n\n(?<tags>.*)    \n\n### administrator_login\n\n(?<administrator_login>.*)\n\n### environment\n\n(?    <environment>.*)\n\n### minimum_tls_version\n\n(?<minimum_tls_version>.*)\n\n###    public_network_access\n\n(?<public_network_access>.*)\n\n###    active_directory_admin_user\n\n(?<active_directory_admin_user>.*)\n\n###   active_directory_admin_sid\n\n(?<active_directory_admin_sid>.*)\n\n### tenantid\n\n(?    <tenantid>.*)\n\n### sql_database_names\n\n(?<sql_database_names>.*)\n\n### ')
 
-        # Create the terraform vars file from the body
+          # Create a JSON object from the extracted values
+          $body = @{
+              resource_group_name =  $regexResult[0].Groups['resource_group_name'].Value
+              sql_instance_name =  $regexResult[0].Groups['sql_instance_name'].Value
+              location =  $regexResult[0].Groups['location'].Value
+              tags =  $regexResult[0].Groups['tags'].Value
+              administrator_login =  $regexResult[0].Groups['administrator_login'].Value
+              environment =  $regexResult[0].Groups['environment'].Value
+              minimum_tls_version =  $regexResult[0].Groups['minimum_tls_version'].Value
+              public_network_access =  if($regexResult[0].Groups['public_network_access'].Value -eq     "Enabled") { 1 } else { 0 }
+              active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].   Value
+              active_directory_admin_sid =  $regexResult[0].Groups['active_directory_admin_sid'].   Value
+              tenantid =  $regexResult[0].Groups['tenantid'].Value
+              sql_database_names =  $regexResult[0].Groups['sql_database_names'].Value
+          }
 
-        $requestor  =  $regexResult[0].Groups['requestor'].Value
-        $Date = Get-Date -Format "yyyyMMddHHmmss"
+          # Convert the JSON object to a JSON string
+          $bodyJson = $body | ConvertTo-Json
 
-        $varfile = ".\demos\IaC\terraform\deploy_template.txt"
+          # Display the JSON string
+          Write-Host $bodyJson
 
-        $Content = Get-Content $varfile
+          # Send the JSON data as a POST request to a specified URL
+          $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/   InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
 
-        # Iterate through the hashtable and replace placeholders
-        $body.GetEnumerator() | ForEach-Object {
-          $replace = $_.Value
-          switch ($_.Key) {
-              "public_network_access" {
-                  if($replace -eq 1) {
-                      $replace = "true"
-                  } else {
-                      $replace = "false"
+          # Display the response
+          echo $response
+
+          # Create the terraform vars file from a template and replace placeholders
+          $requestor = $regexResult[0].Groups['requestor'].Value
+          $Date = Get-Date -Format "yyyyMMddHHmmss"
+
+          $varfile = ".\demos\IaC\terraform\deploy_template.txt"
+          $Content = Get-Content $varfile
+
+          # Iterate through the hashtable and replace placeholders
+          $body.GetEnumerator() | ForEach-Object {
+              $replace = $_.Value
+              switch ($_.Key) {
+                  "public_network_access" {
+                      if ($replace -eq 1) {
+                          $replace = "true"
+                      } else {
+                          $replace = "false"
+                      }
                   }
               }
+              $placeholder = "__" + $_.Key + "__"
+              $content = $content -replace [regex]::Escape($placeholder), $replace
           }
-           $placeholder = "__" + $_.Key + "__"
-           $content = $content -replace [regex]::Escape($placeholder), $replace
-        }
 
-        $historicaldeployfile = "./demos/IaC/terraform/vars/deploy_{0}_{1}.tfvars" -f $requestor, $Date
-        $deployfile = "./demos/IaC/terraform/deploydev.tfvars"
-        Set-Content $historicaldeployfile $content
-        Set-Content $deployfile $content
+          # Generate file paths with requestor name and date
+          $historicaldeployfile = "./demos/IaC/terraform/vars/deploy_{0}_{1}.tfvars" -f $requestor,     $Date
+          $historicalplanfilename = "./demos/IaC/terraform/plans/deploy_{0}_{1}.plan" -f $requestor,    $Date
+          $historicalplanfilenamefile = "./demos/IaC/terraform/plans/latest/latestplan.txt"
+          $deployfile = "./demos/IaC/terraform/deploydev.tfvars"
+
+          # Write the content to the generated files
+          Set-Content $historicaldeployfile $content
+          Set-Content $deployfile $content
+          Set-Content $historicalplanfilenamefile "$historicalplanfilename"
 
     - name: Add & Commit
       uses: EndBug/add-and-commit@v9

@@ -77,25 +77,31 @@ jobs:
     - name: Create Terraform Plan Artifact
       id: plan
       run: |
-        vars_path="vars"
-        plans_path="plans"
-        rm latest.plan --force
-        ls -l $vars_path
-        # Get the most recent file using find and printf
-        most_recent_var_file=$(find "$vars_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
-        # Extract the filename using basename
-        most_recent_var_filename=$(basename "$most_recent_var_file")
-        echo "The most recent var file is $most_recent_var_filename"
-        # Remove the file extension using parameter expansion
-        most_recent_var_filename_without_extension="${most_recent_var_filename%.*}"
 
-        plan_file_name="$plans_path/$most_recent_var_filename_without_extension.plan"
+          # Remove the existing latest.plan if it exists forcefully
+          rm --force latest.plan
 
-        echo "The plan file name is $plan_file_name"
-        echo "we will run terraform plan -out=$plan_file_name -var-file=$most_recent_var_file -var="administrator_login_password="
-        terraform plan -out="$plan_file_name" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
+          # Path to the variables file for Terraform
+          vars_path="deploydev.tfvars"
 
-        terraform plan -out="latest.plan" -var-file="$most_recent_var_file" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
+          # Directory path for storing plans
+          plans_path="plans"
+
+          # Name of the plan
+          plan_name="plan"
+
+          # Path to the file containing the historical plan filename from the issue workflow
+          historicalplanfilenamefile="./plans/latest/latestplan.txt"
+
+          # Read the content of the historical plan filename from the file
+          historical_plan_name=$(<"$historicalplanfilenamefile")
+
+          # Generate a new Terraform plan with specified variables and secrets
+          terraform plan -out="latest.plan" -var-file="$vars_path"          -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
+
+          # Copy the newly generated latest.plan to a historical plan filename
+          cp latest.plan "$historical_plan_name"
+
       continue-on-error: true
       working-directory: demos/IaC/terraform
 
