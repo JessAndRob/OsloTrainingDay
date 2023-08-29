@@ -159,10 +159,10 @@ jobs:
       with:
         destination_branch: "main"
         source_branch: "new-infra-issue-${{ github.event.issue.number }}"
-        pr_title: "We got some infra to create for issue number #${{ github.event.issue.number }}"
+        pr_title: "PR For ${{ github.event.issue.title }} We got some infra to create or delete for issue number #${{ github.event.issue.number }}"
         pr_body: ":crown: *An automated PR*
-
-        For issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}
+        for ${{ github.event.issue.title }}
+        closes issue number #${{ github.event.issue.number }} raised by @${{ github.event.issue.user.login }}
 
         " # Full markdown support, requires pr_title to be set
         pr_reviewer: "jpomfret"                         # Comma-separated list (no spaces)
