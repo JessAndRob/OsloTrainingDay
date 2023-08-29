@@ -149,7 +149,7 @@ jobs:
       with:
         author_name: DaBot
         author_email: mrrobsewell@outlook.com
-        message: 'Added the updated variables for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
+        message: 'Added the updated variables for the infrastructure deployment to the repo closes #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}***NO_CI***'
         new_branch:  'new-infra-issue-${{ github.event.issue.number }}'
         push: origin new-infra-issue-${{ github.event.issue.number }} --set-upstream --force
       continue-on-error: true
