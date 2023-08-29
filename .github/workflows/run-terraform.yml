@@ -80,7 +80,7 @@ jobs:
         vars_path="vars"
         plans_path="plans"
         rm latest.plan
-        ls - l $vars_path
+        ls -l $vars_path
         # Get the most recent file using find and printf
         most_recent_var_file=$(find "$vars_path" -type f -printf "%T@ %p\n" | sort -n | tail -n 1 | cut -d ' ' -f 2-)
         # Extract the filename using basename
