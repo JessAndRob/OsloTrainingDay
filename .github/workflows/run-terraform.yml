@@ -97,7 +97,7 @@ jobs:
           historical_plan_name=$(<"$historicalplanfilenamefile")
 
           # Generate a new Terraform plan with specified variables and secrets
-          terraform plan -out="latest.plan" -var-file="$vars_path"          -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
+          terraform plan -out="latest.plan" -var-file="$vars_path" -var="administrator_login_password=${{ secrets.ADMINISTRATOR_LOGIN_PASSWORD }}"
 
           # Copy the newly generated latest.plan to a historical plan filename
           cp latest.plan "$historical_plan_name"
@@ -112,7 +112,7 @@ jobs:
           git config --global user.name 'DaBot'
           git config --global user.email 'mrrobsewell@outlook.com'
           git add .
-          git commit -m "Added the plan for the infrastructure deployment to the repo for   issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.  user.login }}***NO_CI***"
+          git commit -m "Added the plan for the infrastructure deployment to the repo for issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.  user.login }}***NO_CI***"
           git push
       continue-on-error: true
 

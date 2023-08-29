@@ -91,9 +91,9 @@ jobs:
               administrator_login =  $regexResult[0].Groups['administrator_login'].Value
               environment =  $regexResult[0].Groups['environment'].Value
               minimum_tls_version =  $regexResult[0].Groups['minimum_tls_version'].Value
-              public_network_access =  if($regexResult[0].Groups['public_network_access'].Value -eq     "Enabled") { 1 } else { 0 }
-              active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].   Value
-              active_directory_admin_sid =  $regexResult[0].Groups['active_directory_admin_sid'].   Value
+              public_network_access =  if($regexResult[0].Groups['public_network_access'].Value -eq "Enabled") { 1 } else { 0 }
+              active_directory_admin_user =  $regexResult[0].Groups['active_directory_admin_user'].Value
+              active_directory_admin_sid =  $regexResult[0].Groups['active_directory_admin_sid'].Value
               tenantid =  $regexResult[0].Groups['tenantid'].Value
               sql_database_names =  $regexResult[0].Groups['sql_database_names'].Value
           }
@@ -105,7 +105,7 @@ jobs:
           Write-Host $bodyJson
 
           # Send the JSON data as a POST request to a specified URL
-          $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/   InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
+          $response = Invoke-RestMethod -Uri 'https://dsoslo2023.azurewebsites.net/api/InsertSqlTfVars' -Method Post -Body $bodyJson -ContentType 'application/json'
 
           # Display the response
           echo $response
@@ -134,8 +134,8 @@ jobs:
           }
 
           # Generate file paths with requestor name and date
-          $historicaldeployfile = "./demos/IaC/terraform/vars/deploy_{0}_{1}.tfvars" -f $requestor,     $Date
-          $historicalplanfilename = "./demos/IaC/terraform/plans/deploy_{0}_{1}.plan" -f $requestor,    $Date
+          $historicaldeployfile = "./demos/IaC/terraform/vars/deploy_{0}_{1}.tfvars" -f $requestor, $Date
+          $historicalplanfilename = "./demos/IaC/terraform/plans/deploy_{0}_{1}.plan" -f $requestor, $Date
           $historicalplanfilenamefile = "./demos/IaC/terraform/plans/latest/latestplan.txt"
           $deployfile = "./demos/IaC/terraform/deploydev.tfvars"
 
@@ -164,7 +164,7 @@ jobs:
 
         For issue number #${{ github.event.issue.number }} raised by  @${{ github.event.issue.user.login }}
 
-        "              # Full markdown support, requires pr_title to be set
+        " # Full markdown support, requires pr_title to be set
         pr_reviewer: "jpomfret"                         # Comma-separated list (no spaces)
         pr_assignee: "jpomfret"                         # Comma-separated list (no spaces)
         pr_label: "create-infra"                               # Comma-separated list (no spaces)                    # Milestone name
