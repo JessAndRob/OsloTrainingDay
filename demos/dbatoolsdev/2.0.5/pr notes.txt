@@ -1,0 +1,23 @@
+# PR Notes
+- InstanceName is null on SMO for Azure SQL dbs - shall I leave it so output matches, or remove for this function?
+- Tested with a sql login that has access to master so can connect to instance - this will just connect once to the instance
+- Tested with a sql login that only has access to user databases - this will connect to each database passed in
+- Any connection methods that Connect-DbaInstance can handle successfully will work here too - tested with SQL Login & Azure AD
+
+
+## todo
+ - tests
+    - try to run with 'new' parameter name - should get suggestion to update
+ - exclusions for certain tests
+    - find regex '(1, 1540' replace with 0, 1540
+ - way to override parameter values
+    - run with parameter that isn't found suggest -Update parameter to update script
+
+    $AzureSQLTips = @{
+    "JSONOutput" = 1
+    "GuidLeadingColumnObjectMinSizeMB" = 5120
+    }
+    -Config $AzureSQLTips
+ - Update switch to get a new script version from GitHub
+ - If we don't have an update switch could do - GH Action to watch for releases and auto create issues
+
