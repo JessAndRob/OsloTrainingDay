@@ -86,7 +86,7 @@ cd demos\IaC\terraform
 
 Remove-Item localterraform.tfstate -ErrorAction SilentlyContinue -Force
 Remove-Item localterraform.tfstate.backup -ErrorAction SilentlyContinue -Force
-Remove-Item .terraform.lock.hcl -ErrorAction SilentlyContinue -Force
+# Remove-Item .terraform.lock.hcl -ErrorAction SilentlyContinue -Force
 
 #endregion first some set up
 
